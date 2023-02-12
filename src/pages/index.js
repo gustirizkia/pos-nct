@@ -1,11 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import Head from "next/head";
+import Image from "next/image";
+import { useState } from "react";
+import Bottombar from "./components/bottombar";
 
 export default function Home() {
+  const [products, setProducts] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
   return (
     <>
       <Head>
@@ -14,110 +13,86 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+      <div className="bg-gray-500">
+        <Bottombar />
+        <main className="p-4 bg-white w-full md:w-1/3 min-h-screen md:mx-auto pb-32">
+          <div className="flex justify-between items-center">
+            <div className="font-bold text-2xl">Nama Toko</div>
+            <div className="font-bold text-xl bg-yellow-400 bg-opacity-20 p-3 px-4  rounded-xl">
+              <div className="text-yellow-600">18</div>
+            </div>
           </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
+          {/* Category */}
+          <div className="mt-4">
+            <div className="text-xl font-semibold">Kategori</div>
+            <div className="overflow-x-scroll scroll- flex mt-2">
+              <div className="bg-yellow-400 border border-yellow-400 mr-3 rounded-lg p-3 px-4 text-gray-700 ">
+                <div className="font-medium"> Makanan</div>
+              </div>
+              <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
+                <div className="font-medium"> Minuman</div>
+              </div>
+              <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
+                <div className="font-medium"> Cemilan</div>
+              </div>
+              <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
+                <div className="font-medium"> Kopi</div>
+              </div>
+              <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 w-full flex">
+                <div className="font-medium"> Penutup</div>
+              </div>
+            </div>
           </div>
-        </div>
+          {/* Category end */}
+          <div className="mt-8">
+            <div className="grid grid-flow-row grid-cols-2 gap-4">
+              {products.map((item, index) => {
+                return (
+                  <div
+                    className="bg-white rounded-xl shadow border"
+                    key={index}
+                  >
+                    <div className="">
+                      <Image
+                        src="https://img.freepik.com/premium-photo/cheese-burger-with-onion-tomato-lettuce-bacon-white-background_499484-1161.jpg?w=2000"
+                        alt="Picture of the author"
+                        width={500}
+                        height={500}
+                        className="rounded-xl"
+                      />
+                    </div>
+                    <div className="p-3">
+                      <div className="font-bold text-xl mt-2 text-gray-700 ">
+                        Cheese Burger
+                      </div>
+                      <div className="flex justify-between items-center mt-2">
+                        <div className="text-gray-800 font-medium">
+                          Rp12.000
+                        </div>
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+                        <div className="bg-yellow-400 text-gray-900 py-1 px-2 rounded-lg">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            class="w-4 h-4"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </main>
+      </div>
     </>
-  )
+  );
 }
