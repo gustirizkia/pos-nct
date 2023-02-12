@@ -1,9 +1,13 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Bottombar() {
   return (
     <div className="fixed flex bg-white py-3 px-4 pb-6 z-10 justify-center bottom-0 w-full ">
-      <div className="bg-yellow-400 px-6 py-3 rounded-full flex items-center text-gray-700">
+      <Link
+        href="/cart"
+        className="bg-yellow-400 px-6 py-3 rounded-full flex items-center text-gray-700"
+      >
         <div className=" font-medium">
           3 Item | <span className="font-bold">Rp40.000</span>
         </div>
@@ -22,7 +26,8 @@ export default function Bottombar() {
             />
           </svg>
         </div>
-      </div>
+      </Link>
+      <div className=""></div>
     </div>
   );
 }

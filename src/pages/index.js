@@ -13,85 +13,72 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-gray-500">
-        <Bottombar />
-        <main className="p-4 bg-white w-full md:w-1/3 min-h-screen md:mx-auto pb-32">
-          <div className="flex justify-between items-center">
-            <div className="font-bold text-2xl">Nama Toko</div>
-            <div className="font-bold text-xl bg-yellow-400 bg-opacity-20 p-3 px-4  rounded-xl">
-              <div className="text-yellow-600">18</div>
+      <Bottombar />
+      <div className="px-4">
+        {/* Category */}
+        <div className="mt-4">
+          <div className="text-xl font-semibold">Kategori</div>
+          <div className="overflow-x-scroll scroll- flex mt-2">
+            <div className="bg-yellow-400 border border-yellow-400 mr-3 rounded-lg p-3 px-4 text-gray-700 ">
+              <div className="font-medium"> Makanan</div>
+            </div>
+            <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
+              <div className="font-medium"> Minuman</div>
+            </div>
+            <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
+              <div className="font-medium"> Cemilan</div>
+            </div>
+            <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
+              <div className="font-medium"> Kopi</div>
+            </div>
+            <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 w-full flex">
+              <div className="font-medium"> Penutup</div>
             </div>
           </div>
-          {/* Category */}
-          <div className="mt-4">
-            <div className="text-xl font-semibold">Kategori</div>
-            <div className="overflow-x-scroll scroll- flex mt-2">
-              <div className="bg-yellow-400 border border-yellow-400 mr-3 rounded-lg p-3 px-4 text-gray-700 ">
-                <div className="font-medium"> Makanan</div>
-              </div>
-              <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
-                <div className="font-medium"> Minuman</div>
-              </div>
-              <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
-                <div className="font-medium"> Cemilan</div>
-              </div>
-              <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
-                <div className="font-medium"> Kopi</div>
-              </div>
-              <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 w-full flex">
-                <div className="font-medium"> Penutup</div>
-              </div>
-            </div>
-          </div>
-          {/* Category end */}
-          <div className="mt-8">
-            <div className="grid grid-flow-row grid-cols-2 gap-4">
-              {products.map((item, index) => {
-                return (
-                  <div
-                    className="bg-white rounded-xl shadow border"
-                    key={index}
-                  >
-                    <div className="">
-                      <Image
-                        src="https://img.freepik.com/premium-photo/cheese-burger-with-onion-tomato-lettuce-bacon-white-background_499484-1161.jpg?w=2000"
-                        alt="Picture of the author"
-                        width={500}
-                        height={500}
-                        className="rounded-xl"
-                      />
+        </div>
+        {/* Category end */}
+        <div className="mt-8">
+          <div className="grid grid-flow-row grid-cols-2 gap-4">
+            {products.map((item, index) => {
+              return (
+                <div className="bg-white rounded-xl shadow border" key={index}>
+                  <div className="">
+                    <Image
+                      src="https://img.freepik.com/premium-photo/cheese-burger-with-onion-tomato-lettuce-bacon-white-background_499484-1161.jpg?w=2000"
+                      alt="Picture of the author"
+                      width={500}
+                      height={500}
+                      className="rounded-xl"
+                    />
+                  </div>
+                  <div className="p-3">
+                    <div className="font-bold text-xl mt-2 text-gray-700 ">
+                      Cheese Burger
                     </div>
-                    <div className="p-3">
-                      <div className="font-bold text-xl mt-2 text-gray-700 ">
-                        Cheese Burger
-                      </div>
-                      <div className="flex justify-between items-center mt-2">
-                        <div className="text-gray-800 font-medium">
-                          Rp12.000
-                        </div>
+                    <div className="flex justify-between items-center mt-2">
+                      <div className="text-gray-800 font-medium">Rp12.000</div>
 
-                        <div className="bg-yellow-400 text-gray-900 py-1 px-2 rounded-lg">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            class="w-4 h-4"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </div>
+                      <div className="bg-yellow-400 text-gray-900 py-1 px-2 rounded-lg">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="w-4 h-4"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
-        </main>
+        </div>
       </div>
     </>
   );
