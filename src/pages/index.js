@@ -1,10 +1,67 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Bottombar from "./components/bottombar";
+import axios from "axios";
+import { setCookie, getCookies } from "cookies-next";
 
-export default function Home() {
-  const [products, setProducts] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+export async function getServerSideProps({ query, req, res }) {
+  let store = query.store;
+  let meja = query.q;
+  let data;
+  let kategori;
+
+  setCookie("mj", meja, { req, res, maxAge: 60 * 6 * 24 });
+  setCookie("st", store, { req, res, maxAge: 60 * 6 * 24 });
+
+  await axios
+    .get(
+      process.env.NEXT_PUBLIC_API + "produk?store_id=" + store + "&meja=" + meja
+    )
+    .then((res) => {
+      data = res.data.data;
+      kategori = res.data.kategori;
+    })
+    .catch((err) => {
+      return {
+        notFound: true,
+      };
+    });
+  if (!data || !kategori) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      dataProduk: data,
+      kategoriProduk: kategori,
+    },
+  };
+}
+
+export default function Home({ dataProduk, kategoriProduk }) {
+  const [dataCart, setDataCart] = useState(0);
+
+  const router = useRouter();
+  const { q } = router.query;
+
+  const addCart = (a) => {
+    axios
+      .post(process.env.NEXT_PUBLIC_API + "cart", {
+        meja_id: q,
+        produk_id: a.uuid,
+      })
+      .then((res) => {
+        setDataCart(res.data.data.qty);
+      })
+      .catch((err) => {
+        console.log("ada error", err);
+      });
+  };
+
   return (
     <>
       <Head>
@@ -13,62 +70,64 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Bottombar />
+      <Bottombar qty={dataCart} />
       <div className="px-4">
         {/* Category */}
         <div className="mt-4">
           <div className="text-xl font-semibold">Kategori</div>
-          <div className="overflow-x-scroll scroll- flex mt-2">
-            <div className="bg-yellow-400 border border-yellow-400 mr-3 rounded-lg p-3 px-4 text-gray-700 ">
-              <div className="font-medium"> Makanan</div>
-            </div>
-            <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
-              <div className="font-medium"> Minuman</div>
-            </div>
-            <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
-              <div className="font-medium"> Cemilan</div>
-            </div>
-            <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 ">
-              <div className="font-medium"> Kopi</div>
-            </div>
-            <div className="bg-white border mr-3  rounded-lg p-3 px-4 text-gray-700 w-full flex">
-              <div className="font-medium"> Penutup</div>
+          <div className="overflow-x-scroll overscroll-x-none  mt-2">
+            <div className="flex w-full">
+              <div className="bg-yellow-400 border border-yellow-400 mr-3 rounded-lg p-3 px-4 text-xs font-medium text-gray-700 ">
+                <div className="whitespace-nowrap"> Semua</div>
+              </div>
+              {kategoriProduk.map((item, index) => {
+                return (
+                  <div
+                    className="bg-white border mr-3   rounded-lg p-3 px-4 text-xs font-medium text-gray-700 w-full "
+                    key={index}
+                  >
+                    <div className="whitespace-nowrap"> {item.nama}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
         {/* Category end */}
         <div className="mt-8">
-          <div className="grid grid-flow-row grid-cols-2 gap-4">
-            {products.map((item, index) => {
+          <div className="grid grid-flow-row grid-cols-2 md:grid-cols-3 gap-4">
+            {dataProduk.map((item, index) => {
               return (
                 <div className="bg-white rounded-xl shadow border" key={index}>
-                  <div className="">
+                  <div className="h-32 w-full object-cover relative">
                     <Image
-                      src="https://img.freepik.com/premium-photo/cheese-burger-with-onion-tomato-lettuce-bacon-white-background_499484-1161.jpg?w=2000"
+                      src={item.image}
                       alt="Picture of the author"
-                      width={500}
-                      height={500}
-                      className="rounded-xl"
+                      fill
+                      className="rounded-t-xl object-cover object-center w-20"
                     />
                   </div>
                   <div className="p-3">
-                    <div className="font-bold text-xl mt-2 text-gray-700 ">
-                      Cheese Burger
-                    </div>
-                    <div className="flex justify-between items-center mt-2">
-                      <div className="text-gray-800 font-medium">Rp12.000</div>
+                    <div className="font-bold text-gray-700 ">{item.nama}</div>
+                    <div className="flex justify-between items-center mt-1">
+                      <div className="text-gray-800">
+                        Rp{item.price.toLocaleString()}
+                      </div>
 
-                      <div className="bg-yellow-400 text-gray-900 py-1 px-2 rounded-lg">
+                      <div
+                        className="bg-yellow-400 text-gray-900 py-1 px-2 rounded-lg"
+                        onClick={() => addCart(item)}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="currentColor"
-                          class="w-4 h-4"
+                          className="w-4 h-4"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
